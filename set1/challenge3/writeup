@@ -1,0 +1,27 @@
+The hex encoded string:
+
+1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736
+
+... has been XOR'd against a single character. Find the key, decrypt the message.
+
+You can do this by hand. But don't: write code to do it for you.
+
+How? Devise some method for "scoring" a piece of English plaintext. Character frequency is a good metric. Evaluate each output and choose the one with the best score.
+
+------------------------------------------------------------------------------------
+
+ETAOIN SHRDLU, order of the most common letters in the english language.
+Also ascii characters in hex will begin with 4/5 for capital letters and 5/6 for lower case.
+Going off that fact
+
+1b 37 37 33 31 36 3f 78 15 1b 7f 2b 78 34 31 33 3d 78 39 78 28 37 2d 36 3c 78 37 3e 78 3a 39 3b 37 36
+
+37 repeats the most times and to get e (65) from 37 would have to be xor with 52.
+With 0x5* as key you would get every char upper or lower case. Also I was trying to find which value represented space because that would validate second nibble.
+The only way to get 0x20 with 0x5* as xor is for the first nibble to be 7 and second to equal. Then I notice this in sequence above 0x78 0x39 0x78.
+Assuming that is " a " ( "a" with a space before and after) then the key must be 0x58 which works turning 0x783978 to 0x206120.
+
+so the answer than becomes
+
+436f6f6b696e67204d432773206c696b65206120706f756e64206f66206261636f6e
+"Cooking MC's like a pound of bacon"
